@@ -1,0 +1,144 @@
+{
+  "status": "PASS",
+  "scope": "Finite cross-check for 3<=n<=36 of labeled half-weight colorings; unrestricted support reduction is supplied by the paper and Lean.",
+  "states": 144,
+  "edges": 48,
+  "checks": [
+    {
+      "n": 3,
+      "count": 0
+    },
+    {
+      "n": 4,
+      "count": 12
+    },
+    {
+      "n": 5,
+      "count": 0
+    },
+    {
+      "n": 6,
+      "count": 12
+    },
+    {
+      "n": 7,
+      "count": 0
+    },
+    {
+      "n": 8,
+      "count": 12
+    },
+    {
+      "n": 9,
+      "count": 0
+    },
+    {
+      "n": 10,
+      "count": 0
+    },
+    {
+      "n": 11,
+      "count": 0
+    },
+    {
+      "n": 12,
+      "count": 24
+    },
+    {
+      "n": 13,
+      "count": 0
+    },
+    {
+      "n": 14,
+      "count": 0
+    },
+    {
+      "n": 15,
+      "count": 0
+    },
+    {
+      "n": 16,
+      "count": 12
+    },
+    {
+      "n": 17,
+      "count": 0
+    },
+    {
+      "n": 18,
+      "count": 12
+    },
+    {
+      "n": 19,
+      "count": 0
+    },
+    {
+      "n": 20,
+      "count": 12
+    },
+    {
+      "n": 21,
+      "count": 0
+    },
+    {
+      "n": 22,
+      "count": 0
+    },
+    {
+      "n": 23,
+      "count": 0
+    },
+    {
+      "n": 24,
+      "count": 24
+    },
+    {
+      "n": 25,
+      "count": 0
+    },
+    {
+      "n": 26,
+      "count": 0
+    },
+    {
+      "n": 27,
+      "count": 0
+    },
+    {
+      "n": 28,
+      "count": 12
+    },
+    {
+      "n": 29,
+      "count": 0
+    },
+    {
+      "n": 30,
+      "count": 12
+    },
+    {
+      "n": 31,
+      "count": 0
+    },
+    {
+      "n": 32,
+      "count": 12
+    },
+    {
+      "n": 33,
+      "count": 0
+    },
+    {
+      "n": 34,
+      "count": 0
+    },
+    {
+      "n": 35,
+      "count": 0
+    },
+    {
+      "n": 36,
+      "count": 24
+    }
+  ]
+}

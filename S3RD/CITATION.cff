@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Please cite the accompanying paper when using this proof artifact."
+title: "Singleton Three-Rainbow Domination of Cylindrical Graphs"
+type: software
+authors:
+  - family-names: "Gatanot"
+preferred-citation:
+  type: article
+  title: "Singleton Three-Rainbow Domination of Cylindrical Graphs"
+  authors:
+    - family-names: "Gatanot"
+  year: 2026

@@ -1,0 +1,404 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\srdom}{\widetilde\gamma_{r3}}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\Pgraph}{P}
+\newcommand{\Cgraph}{C}
+\newcommand{\res}{\mathop{\rm mod}}
+\DeclareMathOperator{\supp}{supp}
+
+\title{Singleton Three-Rainbow Domination of Cylindrical Graphs}
+\author{Gatanot\\
+Independent Researcher\\
+\texttt{baoyuedaocun@gmail.com}}
+\date{}
+
+\input{repository}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We determine the singleton three-rainbow domination number of the cylindrical graph $P_m\square C_n$ for every $m,n\geq 3$. For odd $m\geq 5$ the value is $\lceil mn/2\rceil$; for even $m\geq 6$ it is $mn/2+(n\bmod 2)$. At width three, the value is $\lceil 3n/2\rceil$, except when $n\equiv 2,10\pmod {12}$, when it is one larger. At width four the value is $2n+1$ for odd $n$, $2n$ for $n=6$ and every even $n\geq 10$, and the exceptional values $9$ and $18$ at $n=4$ and $n=8$. The proof combines a two-column counting bound, rigidity of equality supports, compatible finite coloring blocks, horizontal and vertical concatenation, and finite certificates for the short width-four cases. The finite graph semantics and the optimality statements are also verified in Lean.
+\end{abstract}
+
+\noindent\textbf{Keywords:} singleton rainbow domination; cylindrical graph; exact formula; formal verification.
+
+\section{Introduction}
+
+A rainbow dominating function assigns colors to vertices so that every uncolored vertex sees all required colors in its neighborhood. In the singleton version, at most one color may be assigned to each vertex. This restriction makes the support of a coloring an essential part of the problem: a vertex cannot carry several colors at once. In this paper we study singleton three-rainbow domination on Cartesian products of paths and cycles.
+
+Let $P_m$ be the path on $m$ vertices and let $C_n$ be the cycle on $n$ vertices. The graph $P_m\square C_n$ is a cylinder of width $m$ and circumference $n$. The path direction has boundary rows, while the cycle direction has no boundary. We give an exact formula for all $m,n\geq 3$.
+
+Gao et al.~\cite{Gao2024} study ordinary rainbow domination on Cartesian products of paths and cycles. For cylindrical graphs, their results include the ordinary three-rainbow domination number when $m=3,4$ or $n=3,4$. Ordinary rainbow domination permits multiple colors at a vertex, whereas the singleton parameter considered here permits at most one. Consequently, $\gamma_{r3}(G)\leq\srdom(G)$; an ordinary optimum realized using only singletons also determines the singleton value. We give a complete classification of the singleton parameter for all $m,n\geq3$.
+
+The general lower bound and several exact parameter ranges are established in \cite{Zerovnik2026}. Relative to Theorem~1 of that paper, our odd-width result determines the remaining cases $m\geq5$ odd and $n\equiv2,10\pmod{12}$: the value is the lower endpoint $mn/2$ of the stated interval. At width three the corresponding value is the upper endpoint. The other ranges are included to give a uniform, self-contained classification, together with a formal verification of the arguments.
+
+The main result is the following. The notation $n\bmod 2$ means the element of $\{0,1\}$ congruent to $n$ modulo $2$.
+
+\begin{theorem}[Complete classification]\label{thm:main}
+For every integer $n\geq 3$ the following hold.
+\begin{enumerate}
+  \item If $m\geq 5$ is odd, then
+  \[
+    \srdom(P_m\square C_n)=\left\lceil\frac{mn}{2}\right\rceil.
+  \]
+  \item If $m\geq 6$ is even, then
+  \[
+    \srdom(P_m\square C_n)=\frac{mn}{2}+(n\bmod 2).
+  \]
+  \item At width three,
+  \[
+  \srdom(P_3\square C_n)=\left\lceil\frac{3n}{2}\right\rceil+
+  \begin{cases}
+    1,& n\equiv 2,10\pmod {12},\\
+    0,&\text{otherwise}.
+  \end{cases}
+  \]
+  \item At width four,
+  \[
+  \srdom(P_4\square C_n)=
+  \begin{cases}
+    2n+1,& n\text{ odd},\\
+    9,& n=4,\\
+    2n,& n=6\text{ or }n\geq 10\text{ even},\\
+    18,& n=8.
+  \end{cases}
+  \]
+\end{enumerate}
+\end{theorem}
+
+The remainder of the paper proves the theorem. Section~\ref{sec:definitions} fixes the definitions and proves the basic counting bound. Section~\ref{sec:constructions} develops the block constructions. Section~\ref{sec:width-three} analyzes the exceptional width-three behavior. Section~\ref{sec:width-four} records the finite width-four certificates. Section~\ref{sec:formal} describes the formal verification and reproducibility materials.
+
+\section{Definitions and the two-column bound}\label{sec:definitions}
+
+We index the vertices of $P_m\square C_n$ by pairs $(r,j)$, where $0\leq r<m$ and $j\in\Z/n\Z$. Two vertices are adjacent when either their column coordinates agree and their row coordinates differ by one within the path, or their row coordinates agree and their column coordinates differ by one modulo $n$.
+
+\begin{definition}
+A singleton three-rainbow coloring is a map
+\[
+ f:V(P_m\square C_n)\longrightarrow\{0,1,2,3\}.
+\]
+The value $0$ means that the vertex is uncolored, and $1,2,3$ are the three colors. The coloring is valid if, for every vertex $v$ with $f(v)=0$,
+\[
+ \{1,2,3\}\subseteq\{f(u):u\in N(v)\}.
+\]
+Its weight is
+\[
+ \wt(f)=\bigl|\{v:f(v)\neq 0\}\bigr|.
+\]
+The singleton three-rainbow domination number $\srdom(G)$ is the minimum weight of a valid singleton three-rainbow coloring of $G$.
+\end{definition}
+
+For a coloring $f$, write $a_{r,j}=1$ if $f(r,j)\neq 0$ and $a_{r,j}=0$ otherwise. We first establish the support bound that drives all lower bounds.
+
+\begin{lemma}[Two-column bound]\label{lem:two-column}
+Every valid coloring of $P_m\square C_n$ satisfies
+\[
+ 2\wt(f)\geq mn.
+\]
+\end{lemma}
+
+\begin{proof}
+Fix two adjacent columns $j,j+1$ and put
+\[
+ s_r=a_{r,j}+a_{r,j+1}.
+\]
+If $s_r=0$, both vertices in row $r$ are uncolored. Each has the other vertex as an uncolored horizontal neighbor, so all its other possible neighbors must exist and be colored. Consequently $r$ is not a boundary row and
+\[
+ s_{r-1}=s_{r+1}=2.
+\]
+Process the rows from top to bottom. A row with $s_r\geq 1$ contributes at least one. A row with $s_r=0$ can be paired with the next row, which exists and contributes two. Thus the rows can be partitioned into single rows and successive pairs, each part contributing at least its number of rows. Hence
+\[
+ \sum_{r=0}^{m-1}s_r\geq m.
+\]
+Summing this inequality over all $n$ adjacent column pairs counts every colored vertex twice, and gives $2\wt(f)\geq mn$.
+\end{proof}
+
+The equality case is sufficiently rigid to settle all odd circumferences in the even-width regime.
+
+\begin{lemma}[Equality-support rigidity]\label{lem:rigidity}
+If a valid coloring has weight $mn/2$, then every row alternates between colored and uncolored vertices. In particular, $n$ is even.
+\end{lemma}
+
+\begin{proof}
+Add the missing path-boundary edges to obtain the four-regular torus $C_m\square C_n$, and let $D$ be the colored support. Let $E_{00}$ and $E_{11}$ denote the sets of edges whose endpoints are respectively both uncolored and both colored. Every uncolored vertex has at most one uncolored neighbor in this torus: an interior zero has four neighbors in the torus and at least three colored neighbors, while a boundary zero had all three of its original neighbors colored and gains only the new boundary edge.
+
+Translate an $E_{00}$ edge one step in each of the two opposite directions along the perpendicular coordinate. Both translated edges are in $E_{11}$. Conversely, an $E_{11}$ edge receives at most two such incidences, from the two reverse translations; the two positions are distinct because $m,n\geq3$. Hence
+\[
+ |E_{00}|\leq |E_{11}|.
+\]
+Degree counting gives
+\[
+ 4|D|=2|E_{11}|+|E_{01}|,
+ \qquad
+ 4|V\setminus D|=2|E_{00}|+|E_{01}|.
+\]
+At half weight, $|D|=|V\setminus D|$, so $|E_{00}|=|E_{11}|$ and every $E_{11}$ edge receives both possible incidences.
+
+Suppose that a horizontal $E_{00}$ edge lies in row $r$. Its vertical translates are horizontal $E_{11}$ edges. Saturation forces the same $E_{11}$ edge to have the other horizontal $E_{00}$ preimage, so a horizontal $E_{00}$ edge also lies two rows farther along. Repeating this propagation by steps of two reaches a path-boundary row: if $m$ is odd, the steps of two visit every row; if $m$ is even, the two boundary rows belong to the two different parity classes. At a boundary, a horizontal $E_{00}$ edge gives a zero vertex an uncolored horizontal neighbor, leaving at most two colored neighbors in the original degree-three boundary. This contradicts the three-rainbow condition. Thus no horizontal $E_{00}$ edge exists. A horizontal $E_{11}$ edge would, by saturation, have a horizontal $E_{00}$ preimage, so it is impossible as well.
+
+Every horizontal edge therefore has exactly one colored endpoint. Each row alternates, which also forces $n$ to be even.
+\end{proof}
+
+\section{Concatenation and explicit constructions}\label{sec:constructions}
+
+A block is a valid coloring displayed as a cyclic sequence of columns. Digits within a column are read from top to bottom. Within each width, the blocks used together share their first and last columns; exceptions are noted where they occur.
+
+\begin{lemma}[Horizontal concatenation]\label{lem:horizontal}
+Two blocks of the same width with equal first columns and equal last columns can be concatenated to form a valid cylinder coloring. Their weights add.
+\end{lemma}
+
+\begin{proof}
+At each new interface, a last column sees the same following column as in its original cylinder, and a first column sees the same preceding column as in its original cylinder. All other neighbor relations are unchanged. The closing interface is covered by the same observation. The vertex sets of the blocks are disjoint, so their weights add.
+\end{proof}
+
+\begin{lemma}[Vertical concatenation]\label{lem:vertical}
+Stacking valid colorings of $P_a\square C_n$ and $P_b\square C_n$ gives a valid coloring of $P_{a+b}\square C_n$ whose weight is the sum of the two weights.
+\end{lemma}
+
+\begin{proof}
+Stacking adds edges between the two former boundary rows. Existing neighbors remain, so every uncolored vertex retains the three required colors. The weights add because the two strips have disjoint vertex sets.
+\end{proof}
+
+\subsection{Half-weight blocks}
+
+The following blocks have weights $mn/2$. They are listed as cyclic column sequences; a digit string is one column.
+
+\begin{table}[ht]
+\centering
+\small
+\caption{Half-weight blocks.}
+\label{tab:blocks}
+\begin{tabular}{@{}cc>{\ttfamily\raggedright\arraybackslash}p{0.68\linewidth}@{}}
+\toprule
+width & circumference & columns (top to bottom within each column)\\
+\midrule
+4 & 6  & 1010 0203 3020 0101 2030 0302\\
+4 & 10 & 1010 0203 3010 0102 2030 0101 3020 0103 2010 0302\\
+4 & 14 & 1010 0203 3010 0102 2030 0101 3020 0103 2020 0301 1020 0303 2010 0302\\
+5 & 6  & 10101 02030 30202 01010 20303 03020\\
+5 & 8  & 10101 02030 30102 02030 10101 03020 20103 03020\\
+5 & 10 & 10102 02030 30101 01020 20303 01010 30202 01030 20201 03030\\
+7 & 6  & 1010101 0202030 3030202 0101010 2020303 0303020\\
+7 & 10 & 1010101 0202030 3030102 0102010 2030303 0101020 3020301 0103020 2020103 0303020\\
+7 & 14 & 1010101 0202030 3030102 0102010 2030303 0101020 3020201 0103030 2030102 0102030 3020101 0103020 2020103 0303020\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Each block in \cref{tab:blocks} can be checked directly from the local validity rule. For widths four and seven, the listed blocks have the same first and last columns. The lengths $6,10,14$ therefore cover every even circumference $n=6$ or $n\geq 10$: according to its residue modulo $6$, write $n$ as $6+6t$, $10+6t$, or $14+6t$, and append copies of the length-six block.
+
+At circumferences $4$ and $8$, use the four-row pattern
+\[
+\begin{array}{c}
+\texttt{1030}\\
+\texttt{0202}\\
+\texttt{3010}\\
+\texttt{0202}
+\end{array}
+\]
+repeated vertically with period four and truncated at the desired odd height; repeat it horizontally when $n=8$. Every row has half its vertices colored. At an even-indexed row the two vertical neighboring patterns agree, so losing one of them at a path boundary does not affect validity; odd-indexed rows are internal. This gives half-weight colorings for odd widths at $n=4,8$.
+
+For width five, the length-six and length-eight blocks have common interfaces, while the length-ten block is a separate base case. Every even $n\geq 12$ is $6a+8b$ for nonnegative integers $a,b$. Indeed, writing $N=n/2\geq 6$, choose $b\in\{0,1,2\}$ with $b\equiv N\pmod 3$; then $N-4b\geq 0$ and $a=(N-4b)/3$. Together with the length-four and length-ten base cases and the short pattern, this gives half-weight colorings for width five at every even $n\geq 4$.
+
+\subsection{Odd widths at even circumference}
+
+For $n=4,8$, use the preceding four-column pattern directly. Otherwise, every odd $m\geq 5$ is either $5+4t$ or $7+4t$. Stack the corresponding width-five or width-seven coloring from the preceding subsection with $t$ width-four colorings. The preceding paragraph includes the separate width-five base case $n=10$, while the width-four blocks cover all other even circumferences in this branch. By \cref{lem:vertical}, this gives weight $mn/2$ for every even $n\geq 4$. The lower bound in \cref{lem:two-column} proves optimality.
+
+\subsection{Odd circumference}
+
+For the odd-circumference construction, regard
+\[
+ A=(1,0,3,0)^T,\qquad B=(0,2,0,2)^T,\qquad C=(3,0,1,0)^T
+\]
+as columns with row index modulo four. Use the words $ACB$, $ABCB$, and $AABCB$, of lengths $3,4$, and $5$, respectively. Repeat their rows periodically and take the first $m=2k+1\geq 3$ rows. At even row indices the two vertical neighbor patterns agree, and odd row indices never lie on the boundary, so a direct local check proves validity, including at the boundary rows. Their weights are $3k+2$, $4k+2$, and $5k+3$, respectively.
+
+The words have the same first and last columns. Every odd $n\geq 3$ is either $3+4t$ or $5+4t$. Concatenation with $t$ copies of the length-four word gives a valid coloring of weight $(mn+1)/2$. The lower bound in \cref{lem:two-column} gives the matching integer lower bound. This construction applies to every odd width $m\geq 3$.
+
+\subsection{Even widths at least six}
+
+Let $m\geq 6$ be even. If $n=4$ or $8$, write $m=3+(m-3)$. Both summands are odd, and the short-circumference construction above supplies half-weight colorings on both strips; vertical concatenation gives weight $mn/2$.
+
+For $n=6$ or even $n\geq 10$, write $m=4+4t$ when $4\mid m$, and $m=6+4t$ otherwise. The width-four blocks in \cref{tab:blocks} handle the first case. For the second case use the following compatible width-six blocks:
+\begin{center}
+\small
+\begin{tabular}{@{}c>{\ttfamily\raggedright\arraybackslash}p{0.74\linewidth}@{}}
+\toprule
+length & columns (top to bottom within each column)\\
+\midrule
+6 & 101010 020302 302030 010101 203020 030203\\
+10 & 101010 020302 301010 010203 203010 010102 302030 010101 203020 030203\\
+14 & 101010 020302 301010 010203 203010 010102 302030 010101 203020 010103 302010 010302 201010 030203\\
+\bottomrule
+\end{tabular}
+\end{center}
+Every column has three colored vertices, and direct checking establishes validity. Length decomposition into $6$, $10$, or $14$, followed by copies of length six, gives half-weight colorings. Vertical concatenation proves the claim for all even widths and even circumferences.
+
+If $n$ is odd, split $m=3+(m-3)$. The odd-width construction gives weights $(3n+1)/2$ and $((m-3)n+1)/2$ on the two odd-width strips. Their sum is $mn/2+1$. By \cref{lem:rigidity}, weight $mn/2$ is impossible, so this construction is optimal.
+
+\section{The width-three obstruction}\label{sec:width-three}
+
+The lower bound in \cref{lem:two-column} is not always attainable at width three. Its equality case has a particularly strong form.
+
+\begin{lemma}[Support at equality]\label{lem:width-three-support}
+If a valid coloring of $P_3\square C_n$ has weight $3n/2$, then $n$ is even and, after a cyclic shift, its columns alternate between
+\[
+ (x_j,0,z_j)^T\qquad\text{and}\qquad (0,y_j,0)^T,
+\]
+where all displayed variables are nonzero.
+\end{lemma}
+
+\begin{proof}
+Equality in the two-column bound forces every adjacent column pair to have total support weight three. The top and bottom row contributions cannot be zero, since a boundary zero would then have an uncolored horizontal neighbor. If the middle contribution were zero, the row-pair argument in the proof of \cref{lem:two-column} would force both boundary contributions to be two, contradicting total weight three. Thus all three row contributions equal one. Every row alternates, and $n$ is even.
+
+At a boundary zero, the two horizontal neighbors and the middle neighbor must all be colored. Thus whenever the top row is zero, the middle row is colored; alternation forces their phases to be opposite. The same holds at the bottom row. Hence both boundary rows have the phase opposite to the middle row, and therefore have the same phase. This gives the displayed column forms.
+\end{proof}
+
+\begin{lemma}[Divisibility at equality]\label{lem:width-three-divisibility}
+A half-weight coloring of $P_3\square C_n$ exists only if $4\mid n$ or $6\mid n$.
+\end{lemma}
+
+\begin{proof}
+Put $L=n/2$ and use the notation of \cref{lem:width-three-support}, with indices modulo $L$. The boundary zeros imply
+\[
+ \{x_j,x_{j+1},y_j\}=\{z_j,z_{j+1},y_j\}=\{1,2,3\}.
+\]
+In particular, the pairs $(x_j,x_{j+1})$ and $(z_j,z_{j+1})$ are equal and contain two distinct colors.
+
+If $x_j=z_j$ for some $j$, this equality propagates around the cycle. The middle zero at column $2j$ must then see all colors among $y_{j-1},y_j,x_j$, so $y_{j-1}\neq y_j$. Since $y_j$ is the missing color of $(x_j,x_{j+1})$, it follows that $x_{j-1}\neq x_{j+1}$. Every successive triple of the $x$-sequence consists of all three colors, so its least period is three and closure requires $3\mid L$.
+
+If no index has $x_j=z_j$, the pair identity gives $x_{j+1}=z_j$ and $z_{j+1}=x_j$. Two distinct colors swap at every step. Closure requires $2\mid L$. Thus either $6\mid n$ or $4\mid n$.
+\end{proof}
+
+The sufficient blocks are
+\[
+\begin{array}{c|c|l}
+\text{length}&\text{weight}&\text{columns}\\
+\hline
+4&6&\texttt{103 020 301 020}\\
+6&9&\texttt{101 020 303 010 202 030}
+\end{array}
+\]
+and can be repeated arbitrarily. If an even $n$ is divisible by neither $4$ nor $6$, then $n\equiv 2,10\pmod {12}$, and the two preceding lemmas imply the integer lower bound $3n/2+1$. The block
+\[
+ \texttt{103 102 030 201 301 020}
+\]
+has length six, weight ten, and the same first and last columns as the length-four block. Appending any number $t\geq 0$ of length-four blocks gives circumference $6+4t$ and weight $10+6t=3n/2+1$. Every exceptional circumference has this form. Together with the odd-circumference construction, this proves the width-three part of \cref{thm:main}.
+
+\begin{proposition}[Labeled equality cases]\label{prop:width-three-count}
+Let $H(n)$ count half-weight singleton three-rainbow colorings of $P_3\square C_n$, with every vertex and each color distinguished. Then
+\[
+ H(n)=12\ind_{4\mid n}+12\ind_{6\mid n}\qquad(n\geq 3).
+\]
+Every such coloring, viewed as an infinite periodic column sequence, has least period four or six.
+\end{proposition}
+
+\begin{proof}
+There are two choices for which parity of columns contains the top and bottom colors. In the equal-boundary case of \cref{lem:width-three-divisibility}, choose the ordered pair $(x_0,x_1)$ of distinct colors in six ways. The third color is forced at $x_2$, and the sequence repeats with period three in the pair index; the middle colors are uniquely determined. Closure is possible precisely when $6\mid n$, giving $2\cdot 6=12$ labeled colorings.
+
+In the unequal-boundary case, choose the ordered distinct pair $(x_0,z_0)$ in six ways. These colors swap at each pair index, and every middle color is the remaining third color. Closure is possible precisely when $4\mid n$, again giving twelve colorings. The two cases are disjoint because the boundary colors on every double-colored column are equal in the first case and different in the second. No quotient by rotations, reflections, or color permutations is taken. The alternating column shapes force any period to be even, and the forced pair sequences have least periods three and two, respectively.
+\end{proof}
+
+\section{Width four and finite certificates}\label{sec:width-four}
+
+The half-weight blocks in \cref{tab:blocks} give $\srdom(P_4\square C_n)=2n$ for $n=6$ and every even $n\geq 10$. For odd circumferences, use the following base blocks:
+\[
+\begin{array}{c|l}
+ n&\text{cyclic columns}\\
+\hline
+3&\texttt{1010 2203 0302}\\
+5&\texttt{1010 0203 3010 2302 0302}\\
+7&\texttt{1010 2203 0301 1020 0303 2010 0302}
+\end{array}
+\]
+Their weights are $7,11,15$, and their first and last columns are respectively $\texttt{1010}$ and $\texttt{0302}$, the same interface as the width-four length-six block. According as $n\equiv 3,5,1\pmod 6$, append copies of that length-six block. This gives weight $2n+1$ for every odd $n\geq 3$. Since $n$ is odd, \cref{lem:rigidity} rules out weight $2n$, so the construction is optimal.
+
+At $n=4$ and $n=8$, the half-weight support bound requires separate finite treatment. For $n=4$, the bound gives weight at least $8$, but equality-support rigidity does not exclude equality: there are four possible half-weight support patterns. The finite support/color certificates proved in \texttt{WidthFourSearch.lean} and connected to arbitrary \texttt{Grid} colorings in \texttt{WidthFour.lean} exclude all four patterns, while the explicit weight-$9$ witness recorded in Appendix~\ref{app:width-four-certificates} gives the matching upper bound. For $n=8$, the bound gives weight at least $16$. The certificate first reduces the possibilities to nine column-weight sequences of total weight at most $17$, then exhaustively enumerates the compatible low-weight support cycles and proves that none admits a valid assignment of the three colors; in particular, it excludes both weights $16$ and $17$. Together with the explicit weight-$18$ witness recorded in Appendix~\ref{app:width-four-certificates}, this proves
+\[
+ \srdom(P_4\square C_4)=9,\qquad
+ \srdom(P_4\square C_8)=18.
+\]
+This completes the width-four part of \cref{thm:main}.
+
+\section{Formal verification and reproducibility}\label{sec:formal}
+
+The accompanying formal development uses Lean 4.33.0 with the standard library. It formalizes the finite graph semantics, the validity predicate, the horizontal and vertical concatenation lemmas, the displayed finite blocks, the two-column lower bound, the parity constructions, and the final optimality theorems. The final statements use explicit finite vertices and neighbor relations rather than relying on an unspecified graph-model correspondence.
+
+The width-three divisibility argument is also connected to a finite local certificate. The two equality-support column shapes admit twelve encodings. A table on the $144$ pairs of encodings records the possible transitions, periods, and positions. Lean checks the local implications by decidability; induction on a walk length proves the divisibility condition for a closed walk; and the encoding is connected back to arbitrary colorings of the actual cylinder. Python is used to generate and independently inspect the table, but it is not trusted for the proof of its properties.
+
+The unified theorem is \path{S3RD.all_widths_ge_five_graph_optimal}; it is proved in \path{S3RD/lean/Audit.lean}. The width-three theorem is recorded separately as \path{all_odd_graph_optimal}. The reported foundational axioms are \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}. No admitted goals, custom mathematical axioms, or \texttt{native\_decide} are used.
+
+The ancillary source includes the Lean files, the block data, the finite certificates, and both checking scripts. From the extracted \path{anc} directory (or from the source repository root), the principal checks are:
+{\small
+\begin{verbatim}
+python scripts/check_lean.py --lean /absolute/path/to/lean
+python scripts/check_paper_blocks.py
+\end{verbatim}}
+Replace \texttt{/absolute/path/to/lean} with the Lean 4.33.0 executable. Both scripts use only the Python standard library. The first creates its output directories, freshly compiles all 19 formal modules in dependency order, and records source hashes and axiom output. The finite width-four certificate can take several minutes; the per-module timeout can be increased with \texttt{--timeout}. The second checks the finite block appendix directly against the graph definition and its correspondence to the Lean data. The infinite parameter ranges follow from the written proofs and their formal counterparts, not from bounded computational testing.
+
+\section{Conclusion and scope}
+
+We have given an exact classification of singleton three-rainbow domination on every cylinder $P_m\square C_n$ with $m,n\geq 3$. The main structural ingredients are the local two-column lower bound, rigidity at equality, compatible block concatenation, and a finite treatment of the short width-four cases. At width three, equality is governed by two periodic mechanisms, of periods four and six, and the two residue classes $n\equiv 2,10\pmod {12}$ are exactly the cases in which neither mechanism closes.
+
+The present classification concerns the value of the parameter. Classifying all minimum colorings, including the heavier optimal colorings at exceptional circumferences, remains a separate problem. The formal artifact verifies the stated definitions and theorems; it is not, by itself, evidence of publication priority.
+
+\section*{Acknowledgments and disclosure}
+
+OpenAI Codex assisted with conjecture exploration, construction discovery, proof development, Lean formalization, literature searching, and manuscript drafting. Finite computations were used to discover and check constructions, but do not replace the general arguments. The author is responsible for checking the mathematics, the bibliographic record, the authorship and affiliation information, and the final version of the manuscript.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\appendix
+\section{Block data and verification interface}\label{app:blocks}
+
+For completeness, this appendix records the exact half-weight blocks used in the proof. Each item is a cyclic list of columns, with entries read from top to bottom. The displayed blocks have been checked by the repository script \texttt{check\_paper\_blocks.py}; their Lean certificates are listed for reproducibility.
+
+\begin{center}
+\small
+\begin{tabular}{@{}ll>{\ttfamily\raggedright\arraybackslash}p{0.69\linewidth}@{}}
+\toprule
+block & weight & columns\\
+\midrule
+$B_{4,6}$ & 12 & 1010 0203 3020 0101 2030 0302\\
+$B_{4,10}$ & 20 & 1010 0203 3010 0102 2030 0101 3020 0103 2010 0302\\
+$B_{4,14}$ & 28 & 1010 0203 3010 0102 2030 0101 3020 0103 2020 0301 1020 0303 2010 0302\\
+$B_{5,6}$ & 15 & 10101 02030 30202 01010 20303 03020\\
+$B_{5,8}$ & 20 & 10101 02030 30102 02030 10101 03020 20103 03020\\
+$B_{5,10}$ & 25 & 10102 02030 30101 01020 20303 01010 30202 01030 20201 03030\\
+$B_{7,6}$ & 21 & 1010101 0202030 3030202 0101010 2020303 0303020\\
+$B_{7,10}$ & 35 & 1010101 0202030 3030102 0102010 2030303 0101020 3020301 0103020 2020103 0303020\\
+$B_{7,14}$ & 49 & 1010101 0202030 3030102 0102010 2030303 0101020 3020201 0103030 2030102 0102030 3020101 0103020 2020103 0303020\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Data and source availability}
+
+The ancillary directory \path{anc} contains a README, the formal development under \path{S3RD/lean}, the three verification scripts under \path{scripts}, recorded verification reports, and a SHA-256 manifest. No precompiled Lean objects are required or included. In particular, the principal formal results and finite certificates are in \path{Audit.lean}, \path{WidthFourSearch.lean}, \path{WidthFour.lean}, and \path{WidthThreeCount.lean}. The submitted ancillary source provides a version-specific copy for independent reproduction.\ifdefined\repositoryurl{} The public source repository is \expandafter\url\expandafter{\repositoryurl}.\fi The finite width-four data are also printed in Appendix~\ref{app:width-four-certificates}.
+
+\input{width4_certificates}
+
+\end{document}

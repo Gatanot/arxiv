@@ -1,0 +1,14 @@
+/build/
+/dist/
+__pycache__/
+*.pyc
+*.olean
+*.ilean
+*.aux
+*.log
+*.out
+*.blg
+*.fdb_latexmk
+*.fls
+.DS_Store
+Thumbs.db

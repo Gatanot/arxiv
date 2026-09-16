@@ -1,0 +1,122 @@
+{
+  "status": "PASS",
+  "lean_version": "Lean (version 4.33.0, x86_64-w64-windows-gnu, commit d8b18978322de05a8f3dba51ef03cf5461676c17, Release)",
+  "scope": "For every m>=5 and every n>=3: the exact singleton 3-rainbow domination number is (m*n+1)/2 plus n mod 2 when m is even, and with no correction when m is odd. Width four is exact for every odd n, n=4, n=6, every even n>=10, and n=8 with value 18. The width-three exception classification is also included. Natural-number division is used.",
+  "excluded": "Publication priority and literature comparison are not formalized. The formal development does not by itself establish an originality claim.",
+  "checks": [
+    {
+      "module": "Core",
+      "sha256": "bf4c3d913c3739e882b9b69af2048465631280b8ad3b3afedcdab75d74c5abb9",
+      "seconds": 8.453,
+      "output": "'S3RD.valid_hcat' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.valid_vcat' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.weight_hcat' depends on axioms: [propext, Quot.sound]\n'S3RD.weight_vcat' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "module": "Assembly",
+      "sha256": "f774b4728ec1272951f4c28243df13490cd73cc8cfa393fbdce2e4292a90aed4",
+      "seconds": 2.078,
+      "output": "'S3RD.pack_extend' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.half_extend' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.lengths_6_10_14' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "module": "Blocks",
+      "sha256": "eb03956bfc981bae9bc1a6a8518a2ead5079de2ef45e9eb7fcbe46caaa250b1b",
+      "seconds": 4.735,
+      "output": "'S3RD.b4_6_pack' depends on axioms: [propext]\n'S3RD.b4_10_pack' depends on axioms: [propext]\n'S3RD.b4_14_pack' depends on axioms: [propext]\n'S3RD.b6_6_pack' depends on axioms: [propext]\n'S3RD.b6_10_pack' depends on axioms: [propext]\n'S3RD.b6_14_pack' depends on axioms: [propext]\n'S3RD.b5_6_pack' depends on axioms: [propext]\n'S3RD.b5_8_pack' depends on axioms: [propext]\n'S3RD.b5_10_pack' depends on axioms: [propext]\n'S3RD.b7_6_pack' depends on axioms: [propext]\n'S3RD.b7_10_pack' depends on axioms: [propext]\n'S3RD.b7_14_pack' depends on axioms: [propext]\n'S3RD.b3_4_pack' depends on axioms: [propext]\n'S3RD.b3_8_pack' depends on axioms: [propext]\n'S3RD.b5_4_pack' depends on axioms: [propext]\n'S3RD.b7_4_pack' depends on axioms: [propext]\n'S3RD.b7_8_pack' depends on axioms: [propext]\n'S3RD.b4_3_odd_pack' depends on axioms: [propext]\n'S3RD.b4_5_odd_pack' depends on axioms: [propext]\n'S3RD.b4_7_odd_pack' depends on axioms: [propext]\n'S3RD.b4_4_exception_pack' depends on axioms: [propext]\n'S3RD.b4_8_exception_pack' depends on axioms: [propext]\n"
+    },
+    {
+      "module": "LowerBound",
+      "sha256": "4f514c4633ab3e9f152c4c91804ccba46845d7b586a0557c3169b140871f9860",
+      "seconds": 2.031,
+      "output": "'S3RD.lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "module": "UpperBounds",
+      "sha256": "f11e2096aeb8ff2bc44e17aca1ca6230444e6ac24c6ca7fda6617241823cf76b",
+      "seconds": 2.172,
+      "output": "'S3RD.width5_half' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width7_half' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.odd_even_half' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.odd_even_optimal_of_lower' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "module": "OddCircumference",
+      "sha256": "f1db3a0d0875b62db35c2d964ebfa8c5c8c71314bcab23c984660dc6399332c4",
+      "seconds": 2.297,
+      "output": "'S3RD.odd_odd_upper' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "module": "Semantics",
+      "sha256": "8b6dc4c52a5dcf4c3a4b5c544ea14406970726501e5e56105d2469cdce7a5d67",
+      "seconds": 1.797,
+      "output": "'S3RD.valid_iff_singletonRainbow' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "module": "Main",
+      "sha256": "9bad5d985f55f9ccfa203226d5509b2d60f9db008996db661b31ecc30329c7ec",
+      "seconds": 1.812,
+      "output": "'S3RD.odd_even_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.odd_odd_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.odd_width_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "module": "ColorCycle",
+      "sha256": "15bb0c7572841d2767ac3ba610722f97a9fc96cee205388b40eaa7854cfa84a6",
+      "seconds": 15.563,
+      "output": "'S3RD.ColorCycle.local_good' depends on axioms: [propext]\n'S3RD.ColorCycle.local_progress' depends on axioms: [propext]\n'S3RD.ColorCycle.position_bound' depends on axioms: [propext]\n"
+    },
+    {
+      "module": "ColorPeriod",
+      "sha256": "611020550321d9b74925dd3ad3de3113af769e1c1ae8d6cd790f9f11617936b1",
+      "seconds": 2.047,
+      "output": "'S3RD.ColorCycle.closed_walk_period' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "module": "WidthThree",
+      "sha256": "612a0a4a625bff27b151d35d5ddc141fd5824731e9726a920af355947f73c660",
+      "seconds": 2.203,
+      "output": "'S3RD.width3_alternating' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width3_column_shape' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "module": "WidthThreePeriod",
+      "sha256": "45ba65606b4f412686cc344fa77d01c4f3a0fbeab464bae0dc11c71da54a5b81",
+      "seconds": 2.109,
+      "output": "'S3RD.width3_half_period' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "module": "Classification",
+      "sha256": "0601998542058b79d9f34ba3fc17c5bc6e4c7ec56c907c331712f3158f7bf7af",
+      "seconds": 2.109,
+      "output": "'S3RD.three_defect' depends on axioms: [propext]\n'S3RD.width3_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.all_odd_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "module": "WidthThreeCount",
+      "sha256": "62faa96839febbc99e203ff8e9ab4aed33a33785849bc97ea6d09ce9823be59b",
+      "seconds": 16.672,
+      "output": "'S3RD.ColorCycle.transition_next_unique' depends on axioms: [propext]\n'S3RD.ColorCycle.color_encoding_injective' does not depend on any axioms\n'S3RD.ColorCycle.shaped_column_unique' depends on axioms: [propext, Quot.sound]\n'S3RD.ColorCycle.good_pair_closes_iff' depends on axioms: [propext, Quot.sound]\n'S3RD.ColorCycle.good_pair_count_period4' depends on axioms: [propext]\n'S3RD.ColorCycle.good_pair_count_period6' depends on axioms: [propext]\n'S3RD.ColorCycle.labeledHalfCount_formula' depends on axioms: [propext]\n"
+    },
+    {
+      "module": "EqualitySupport",
+      "sha256": "9252c63d0b90d04a114df8ab8aee3fba7359e9bd97e3d6913a008d33b0933ff9",
+      "seconds": 2.672,
+      "output": "'S3RD.equality_support_alternating' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.equality_support_even_circumference' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.equality_support_phases' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.equality_strip_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_width_odd_strict_lower' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "module": "EvenWidths",
+      "sha256": "b9bb721600ae7353919dcae1965c57c37526bdb846827ea0b340aae27be8572e",
+      "seconds": 2.985,
+      "output": "'S3RD.even_even_half_large' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_even_half_short' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_even_half' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_even_optimal_large' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_even_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width6_even_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_odd_upper' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_odd_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width4_odd_upper' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width4_odd_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width4_short_upper' depends on axioms: [propext]\n'S3RD.even_width_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width6_upper' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width6_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "module": "WidthFourSearch",
+      "sha256": "feeda44f301a15e9bf0c4dfaef40168fc90720eb6f9c4fbd5ad19ff64eb0d165",
+      "seconds": 666.921,
+      "output": "'S3RD.WidthFourSearch.low_support_color_impossible' depends on axioms: [propext]\n'S3RD.WidthFourSearch.half_support_color_impossible4' depends on axioms: [propext]\n'S3RD.WidthFourSearch.weight_patterns_complete' depends on axioms: [propext]\n'S3RD.WidthFourSearch.support_patterns_complete' depends on axioms: [propext]\n"
+    },
+    {
+      "module": "WidthFour",
+      "sha256": "5d16f91b1efea7141dcf06ce4d386dedb5260074270be9ee08554bd67a94c78e",
+      "seconds": 50.063,
+      "output": "E:\\Codefield\\AI4Math\\arxiv\\S3RD\\S3RD\\lean\\WidthFour.lean:465:10: warning: This simp argument is unused:\n  s\n\nHint: Omit it from the simp argument list.\n  [apply] simp [right] at pair0 pair1 pair2 pair3 pair4 pair5 pair6 pair7\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n'S3RD.colorAt_encodeColumn' depends on axioms: [propext, Quot.sound]\n'S3RD.encodeColumn_lt' depends on axioms: [propext, Quot.sound]\n'S3RD.colorSupport_encodeColumn' depends on axioms: [propext, Quot.sound]\n'S3RD.supportWeight_encodeSupport' depends on axioms: [propext, Quot.sound]\n'S3RD.encodeSupport_lt' depends on axioms: [propext, Quot.sound]\n'S3RD.weightTriplePossible_of_support' depends on axioms: [propext, Quot.sound]\n'S3RD.encodeColumn_mem_choices' depends on axioms: [propext, Quot.sound]\n'S3RD.bit_encodeSupport' depends on axioms: [propext, Quot.sound]\n'S3RD.colorGood_encode_of_valid' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.colorGood_encode_of_valid8' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.supportGood_encode_of_valid8' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.supportSequence8_weight' depends on axioms: [propext, Quot.sound]\n'S3RD.adjacent_column_lower8' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.half_support_sequence4' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width4_four_lower' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width4_four_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.weightPattern_of_cycle' depends on axioms: [propext, Quot.sound]\n'S3RD.lowSupport_of_pattern' depends on axioms: [propext, Quot.sound]\n'S3RD.noColorFor_contradiction' depends on axioms: [propext, Quot.sound]\n'S3RD.width4_eight_lower' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width4_eight_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "module": "Audit",
+      "sha256": "e367578d39e05a9700f6bbad2c4040da1aea9558c9630af2b853501f119f3a73",
+      "seconds": 1.875,
+      "output": "S3RD.all_odd_graph_optimal (m n : Nat) (hm : 3 ≤ m) (ho : m % 2 = 1) (hn : 3 ≤ n) :\n  ∃ f,\n    SingletonRainbow m n f ∧\n      weight m n f = (m * n + 1) / 2 + exception m n ∧\n        ∀ (g : Grid), SingletonRainbow m n g → weight m n f ≤ weight m n g\n'S3RD.all_odd_graph_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\nS3RD.odd_width_graph_optimal (m n : Nat) (hm : 5 ≤ m) (ho : m % 2 = 1) (hn : 3 ≤ n) :\n  ∃ f,\n    SingletonRainbow m n f ∧\n      weight m n f = (m * n + 1) / 2 ∧ ∀ (g : Grid), SingletonRainbow m n g → weight m n f ≤ weight m n g\n'S3RD.odd_width_graph_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.odd_even_half' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.odd_odd_upper' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.valid_iff_singletonRainbow' depends on axioms: [propext, Quot.sound]\n'S3RD.even_even_half_large' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_even_optimal_large' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width6_even_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_odd_upper' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width6_upper' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.equality_support_alternating' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.equality_support_even_circumference' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_width_odd_strict_lower' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_odd_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width6_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_even_graph_optimal_large' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width6_even_graph_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width6_graph_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.even_width_graph_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.width4_odd_graph_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\nS3RD.all_widths_ge_five_graph_optimal (m n : Nat) (hm : 5 ≤ m) (hn : 3 ≤ n) :\n  ∃ f,\n    SingletonRainbow m n f ∧\n      (weight m n f = (m * n + 1) / 2 + if m % 2 = 0 then n % 2 else 0) ∧\n        ∀ (g : Grid), SingletonRainbow m n g → weight m n f ≤ weight m n g\n'S3RD.all_widths_ge_five_graph_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.equality_support_phases' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.equality_strip_decomposition' depends on axioms: [propext, Classical.choice, Quot.sound]\n'S3RD.ColorCycle.good_pair_closes_iff' depends on axioms: [propext, Quot.sound]\n'S3RD.ColorCycle.labeledHalfCount_formula' depends on axioms: [propext]\n"
+    }
+  ]
+}

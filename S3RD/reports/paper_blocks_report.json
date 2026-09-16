@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "scope": "Nine appendix blocks, their permitted ordered joins, and three width-three blocks. This is not a test of all infinite parameters.",
+  "appendix_sha256": "ed43afa5bbd4c4547bf4180c0b89c083f9be8218d39d2bc60af1595e03d3d36c",
+  "checks": [
+    {
+      "name": "b4_6",
+      "m": 4,
+      "n": 6,
+      "weight": 12,
+      "zeros_checked": 12
+    },
+    {
+      "name": "b4_10",
+      "m": 4,
+      "n": 10,
+      "weight": 20,
+      "zeros_checked": 20
+    },
+    {
+      "name": "b4_14",
+      "m": 4,
+      "n": 14,
+      "weight": 28,
+      "zeros_checked": 28
+    },
+    {
+      "name": "b5_6",
+      "m": 5,
+      "n": 6,
+      "weight": 15,
+      "zeros_checked": 15
+    },
+    {
+      "name": "b5_8",
+      "m": 5,
+      "n": 8,
+      "weight": 20,
+      "zeros_checked": 20
+    },
+    {
+      "name": "b5_10",
+      "m": 5,
+      "n": 10,
+      "weight": 25,
+      "zeros_checked": 25
+    },
+    {
+      "name": "b7_6",
+      "m": 7,
+      "n": 6,
+      "weight": 21,
+      "zeros_checked": 21
+    },
+    {
+      "name": "b7_10",
+      "m": 7,
+      "n": 10,
+      "weight": 35,
+      "zeros_checked": 35
+    },
+    {
+      "name": "b7_14",
+      "m": 7,
+      "n": 14,
+      "weight": 49,
+      "zeros_checked": 49
+    },
+    {
+      "name": "three4",
+      "m": 3,
+      "n": 4,
+      "weight": 6,
+      "zeros_checked": 6
+    },
+    {
+      "name": "three6",
+      "m": 3,
+      "n": 6,
+      "weight": 9,
+      "zeros_checked": 9
+    },
+    {
+      "name": "three_defect",
+      "m": 3,
+      "n": 6,
+      "weight": 10,
+      "zeros_checked": 8
+    }
+  ]
+}

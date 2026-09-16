@@ -1,0 +1,126 @@
+\section{Short width-four witnesses and finite certificate data}\label{app:width-four-certificates}
+
+This appendix makes the two short width-four cases reproducible from the
+paper source alone. Columns are listed cyclically, and the entries in each
+column are read from top to bottom. Thus the following are valid singleton
+three-rainbow colorings of the stated weights:
+
+\noindent\begin{minipage}{\linewidth}
+\begin{verbatim}
+P_4 square C_4, weight 9:
+2010 0303 1022 0302
+
+P_4 square C_8, weight 18:
+2030 0101 3020 2303 1011 0203 3010 0102
+\end{verbatim}
+\end{minipage}\par\medskip
+
+For completeness, we record the finite data used by the lower-bound
+certificates. A support is encoded by a four-bit integer: bit $r$ is one
+exactly when row $r$ is occupied. The four possible half-weight support
+cycles for circumference four are
+
+\begin{verbatim}
+[5,10,5,10]
+[10,5,10,5]
+[6,9,6,9]
+[9,6,9,6]
+\end{verbatim}
+
+For circumference eight, the column-weight search leaves the following nine
+sequences when the total weight is at most 17:
+
+\begin{verbatim}
+[2,2,2,2,2,2,2,2]
+[2,2,2,2,2,2,2,3]
+[2,2,2,2,2,2,3,2]
+[2,2,2,2,2,3,2,2]
+[2,2,2,2,3,2,2,2]
+[2,2,2,3,2,2,2,2]
+[2,2,3,2,2,2,2,2]
+[2,3,2,2,2,2,2,2]
+[3,2,2,2,2,2,2,2]
+\end{verbatim}
+
+The corresponding 68 oriented low-weight support cycles are listed below.
+The finite color certificate checks that none of these cycles has a valid
+assignment of colors 1, 2, and 3.
+
+\begin{verbatim}
+[5,10,13,10,5,10,5,10]
+[5,10,7,10,5,10,5,10]
+[5,10,5,14,5,10,5,10]
+[5,10,5,11,5,10,5,10]
+[5,10,5,10,13,10,5,10]
+[5,10,5,10,7,10,5,10]
+[5,10,5,10,5,14,5,10]
+[5,10,5,10,5,11,5,10]
+[5,10,5,10,5,10,13,10]
+[5,10,5,10,5,10,7,10]
+[5,10,5,10,5,10,5,14]
+[5,10,5,10,5,10,5,11]
+[5,10,5,10,5,10,5,10]
+[5,11,5,10,5,10,5,10]
+[5,14,5,10,5,10,5,10]
+[6,9,14,9,6,9,6,9]
+[6,9,7,9,6,9,6,9]
+[6,9,6,13,6,9,6,9]
+[6,9,6,11,6,9,6,9]
+[6,9,6,9,14,9,6,9]
+[6,9,6,9,7,9,6,9]
+[6,9,6,9,6,13,6,9]
+[6,9,6,9,6,11,6,9]
+[6,9,6,9,6,9,14,9]
+[6,9,6,9,6,9,7,9]
+[6,9,6,9,6,9,6,13]
+[6,9,6,9,6,9,6,11]
+[6,9,6,9,6,9,6,9]
+[6,11,6,9,6,9,6,9]
+[6,13,6,9,6,9,6,9]
+[7,9,6,9,6,9,6,9]
+[7,10,5,10,5,10,5,10]
+[9,6,13,6,9,6,9,6]
+[9,6,11,6,9,6,9,6]
+[9,6,9,14,9,6,9,6]
+[9,6,9,7,9,6,9,6]
+[9,6,9,6,13,6,9,6]
+[9,6,9,6,11,6,9,6]
+[9,6,9,6,9,14,9,6]
+[9,6,9,6,9,7,9,6]
+[9,6,9,6,9,6,13,6]
+[9,6,9,6,9,6,11,6]
+[9,6,9,6,9,6,9,14]
+[9,6,9,6,9,6,9,7]
+[9,6,9,6,9,6,9,6]
+[9,7,9,6,9,6,9,6]
+[9,14,9,6,9,6,9,6]
+[10,5,14,5,10,5,10,5]
+[10,5,11,5,10,5,10,5]
+[10,5,10,13,10,5,10,5]
+[10,5,10,7,10,5,10,5]
+[10,5,10,5,14,5,10,5]
+[10,5,10,5,11,5,10,5]
+[10,5,10,5,10,13,10,5]
+[10,5,10,5,10,7,10,5]
+[10,5,10,5,10,5,14,5]
+[10,5,10,5,10,5,11,5]
+[10,5,10,5,10,5,10,13]
+[10,5,10,5,10,5,10,7]
+[10,5,10,5,10,5,10,5]
+[10,7,10,5,10,5,10,5]
+[10,13,10,5,10,5,10,5]
+[11,5,10,5,10,5,10,5]
+[11,6,9,6,9,6,9,6]
+[13,6,9,6,9,6,9,6]
+[13,10,5,10,5,10,5,10]
+[14,5,10,5,10,5,10,5]
+[14,9,6,9,6,9,6,9]
+\end{verbatim}
+
+The four support candidates at $n=4$ are excluded by the finite predicate
+\texttt{half\_support\_color\_impossible4}. For $n=8$, the nine weight
+sequences and the 68 support cycles are checked by
+\texttt{weight\_patterns\_complete}, \texttt{support\_patterns\_complete},
+and \texttt{low\_support\_color\_impossible}. The Lean theorems
+\texttt{width4\_four\_lower} and \texttt{width4\_eight\_lower} connect
+these finite checks to arbitrary valid colorings of the actual cylinders.
